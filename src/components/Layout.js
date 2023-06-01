@@ -18,6 +18,9 @@ export default function Layout({children}) {
     <div className="bg-blue-900 min-h-screen flex">
       <Navbar/>
       <div className="bg-white flex-grow mt-2 mr-2 mb-2 rounded-lg p-4">{children}</div>
+      <div className="text-center w-full">
+          <button onClick={() => signOut('google')} className="bg-white p-2 px-4 rounded-lg">Logout with Google</button>
+        </div>
     </div>
   );
 }
