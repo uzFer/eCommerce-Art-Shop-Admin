@@ -1,7 +1,7 @@
-import { BounceLoader } from "react-spinners";
+import { RingLoader } from "react-spinners";
 
 export default function Spinner() {
     return (
-        <BounceLoader color={'#1E3A8A'} sppedMultipler={2} />
+        <RingLoader color={'#4287f5'} sppedMultipler={2} />
     );
 }

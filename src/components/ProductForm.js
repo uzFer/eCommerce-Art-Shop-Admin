@@ -69,7 +69,7 @@ export default function ProductForm({
                 onChange={e => setName(e.target.value)} />
 
             <label>Photos</label>
-            <div className="mb-2 flex flex-wrap gap-2">
+            <div className="mb-2 flex flex-wrap gap-1">
                 <ReactSortable className="flex flex-wrap gap-1"list={images} setList={updateImagesOrder}>
                 {!!images?.length && images.map(link => (
                     <div key={link} className="h-32">
@@ -78,7 +78,7 @@ export default function ProductForm({
                 ))}
                 </ReactSortable>
                 {isUploading && (
-                    <div classname="h-32 flex items-center">
+                    <div className="h-32 flex items-center">
                         <Spinner />
                     </div>
                 )}
