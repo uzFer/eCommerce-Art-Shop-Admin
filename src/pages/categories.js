@@ -1,10 +1,14 @@
 import Layout from "@/components/Layout";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Categories() {
-    const [name, setName] = useState('');
+    const [name, setName] = useState(''); 
 
-    function saveCategory() {
-
+    async function saveCategory(e) {
+        e.preventDefault();
+        await axios.post('/api/categories', {name});
+        setName('');
     }
 
     return (
@@ -16,8 +20,8 @@ export default function Categories() {
                     className="mb-0" 
                     type="text" 
                     placeholder={'Category name'}
-                    onChange={e => setName(e.target.value)}
                     value={name}
+                    onChange={e => setName(e.target.value)}
                 />
                 <button type="submit" className="primary-btn py-1">Save</button>
             </form>
