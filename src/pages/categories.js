@@ -1,15 +1,28 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { withSwal } from "react-sweetalert2";
 
-export default function Categories() {
+function Categories({swal}) {
     const [name, setName] = useState(''); 
     const [parentCategory, setParentCategory] = useState('');
     const [categories, setCategories] = useState([]);
+    const [editedCategory, setEditedCategory] = useState(null);
 
     async function saveCategory(e) {
         e.preventDefault();
-        await axios.post('/api/categories', {name, parentCategory});
+        const data = {name, parentCategory};
+
+        if(editedCategory) {
+            data._id = editedCategory._id;
+            await axios.put('/api/categories', data);
+            setEditedCategory(null);
+        }
+        else {
+            await axios.post('/api/categories', data);
+        }
+        
+        setParentCategory('');
         setName('');
         fetchCategories();
     }
@@ -20,6 +33,30 @@ export default function Categories() {
         });
     }
 
+    function editCategory(category) {
+        setEditedCategory(category);
+        setName(category.name);
+        setParentCategory(category.parent?._id);
+    }
+
+    function deleteCategory(category) {
+        swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to delete "${category.name}"?`,
+            showCancelButton: true,
+            cancelButtonText: 'No',
+            confirmButtonText: 'Yes',
+            reverseButtons: true,
+            confirmButtonColor: '#d55',
+        }).then(async result => {
+            if(result.isConfirmed) {
+                const {_id} = category;
+                await axios.delete('/api/categories?_id='+_id);
+                fetchCategories();
+            }
+        });
+    }
+
     useEffect(() => {
         fetchCategories();
     }, []);
@@ -27,7 +64,7 @@ export default function Categories() {
     return (
         <Layout>
             <h1>Categories</h1>
-            <label>New Category Name</label>
+            <label>{editedCategory ? `Edit Category "${editedCategory.name}"` : 'Create New Category'}</label>
             <form onSubmit={saveCategory} className="flex gap-1">
                 <input 
                     className="mb-0" 
@@ -44,7 +81,7 @@ export default function Categories() {
                 >
                     <option value="">No parent category</option>
                     {categories.length > 0 && categories.map(category => (
-                        <option value={category._id} key={category}>
+                        <option value={category._id} key={category._id}>
                             {category.name}
                         </option>
                     ))}
@@ -56,12 +93,27 @@ export default function Categories() {
                 <thead>
                     <tr>
                         <td>Category Name</td>
+                        <td>Parent Category</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
                     {categories.length > 0 && categories.map(category => (
                         <tr key={category}>
                             <td>{category.name}</td>
+                            <td>{category?.parent?.name}</td>
+                            <td className="flex flex-">
+                                <button 
+                                    onClick={() => editCategory(category)} 
+                                    className="primary-btn mr-1">
+                                    Edit
+                                </button>
+                                <button 
+                                    onClick={() => deleteCategory(category)} 
+                                    className="primary-btn">
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -69,3 +121,7 @@ export default function Categories() {
         </Layout>
     );
 }
+
+export default withSwal(({swal}, ref) => (
+    <Categories swal={swal} />
+));
