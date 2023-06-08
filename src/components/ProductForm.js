@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Spinner from "./Spinner";
@@ -10,18 +10,23 @@ export default function ProductForm({
     description: currDescription, 
     price: currPrice, 
     images: currImages,
-}) {
+    category: currCategory,
+    properties: currProperties,
+}) { 
     const [name, setName] = useState(currName || '');
     const [description, setDescription] = useState(currDescription || '');
     const [price, setPrice] = useState(currPrice || '');
     const [images, setImages] = useState(currImages || []);
     const [isUploading, setisUploading] = useState(false);
     const [goToProducts, setGoToProducts] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState(currCategory || '');
+    const [productProperties, setProductProperties] = useState(currProperties || {});
     const router = useRouter();
 
     async function saveProduct(e) {
         e.preventDefault();
-        const data = {name, description, price, images};
+        const data = {name, description, price, images, category};
 
         if(_id) {
             // update the product
@@ -60,6 +65,33 @@ export default function ProductForm({
         router.push('/products');
     }
 
+    const propertiesToFill = [];
+    if(categories.length > 0 && category) {
+        let catInfo = categories.find(({_id}) => _id === category)
+        propertiesToFill.push(...catInfo.properties);
+
+        while(catInfo?.parent?._id) {
+            const parentCat = categories.find(({_id}) => _id === catInfo?.parent?._id);
+            propertiesToFill.push(...parentCat.properties);
+            catInfo = parentCat;
+        }
+    }
+
+    function setProductProperty(propertyName, value) {
+        setProductProperties(prev => {
+            const newProductProperties = {...prev};
+            newProductProperties[propertyName] = value;
+            return newProductProperties;
+        })
+    }
+
+    useEffect(() => {
+        axios.get('/api/categories').then(result => {
+            setCategories(result.data);
+        })
+    }, []);
+
+
     return (
         <form onSubmit={saveProduct}>
             <label>Product Name</label>
@@ -67,6 +99,27 @@ export default function ProductForm({
                 placeholder="Product Name"
                 value={name}
                 onChange={e => setName(e.target.value)} />
+
+            <label>Category</label>
+            <select value={category}
+                    onChange={e => setCategory(e.target.value)}>
+                <option value="">No category</option>
+                {categories.length > 0 && categories.map(c => (
+                    <option key={c._id} value={c._id}>{c.name}</option>
+                ))}
+            </select>
+            {propertiesToFill.length > 0 && propertiesToFill.map(p => (
+                <div className="flex gap-1" key={p}>
+                    <div key={p}>{p.name}</div>
+                    <select 
+                        value={productProperties[p.name]}
+                        onChange={e => setProductProperty(p.name, e.target.value)}>
+                        {p.values.map(v => (
+                            <option key={v} value={v}>{v}</option>
+                        ))}
+                    </select>
+                </div>
+            ))}
 
             <label>Photos</label>
             <div className="mb-2 flex flex-wrap gap-1">
