@@ -26,7 +26,10 @@ export default function ProductForm({
 
     async function saveProduct(e) {
         e.preventDefault();
-        const data = {name, description, price, images, category};
+        const data = {
+            name, description, price, images, category, 
+            properties: productProperties
+        };
 
         if(_id) {
             // update the product
@@ -36,7 +39,7 @@ export default function ProductForm({
             // create the product
             await axios.post('/api/products', data);
         }
-        setGoToProducts(true)
+        setGoToProducts(true);
     }
 
     async function uploadImage(e) {
@@ -109,7 +112,7 @@ export default function ProductForm({
                 ))}
             </select>
             {propertiesToFill.length > 0 && propertiesToFill.map(p => (
-                <div className="flex gap-1" key={p}>
+                <div className="flex gap-1" key={p.name}>
                     <div key={p}>{p.name}</div>
                     <select 
                         value={productProperties[p.name]}
