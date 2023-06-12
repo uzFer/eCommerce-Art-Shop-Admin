@@ -16,7 +16,7 @@ input:focus, textarea:focus, select:focus{
 }
 
 h1 {
-    @apply text-blue-900 font-bold mb-5 text-xl;
+    @apply text-gray-900 font-bold mb-5 text-xl;
 }
 
 label {
@@ -24,7 +24,7 @@ label {
 }
 
 .primary-btn {
-    @apply bg-blue-900 text-white px-4 py-1 rounded-md;
+    @apply bg-gray-900 text-white px-4 py-1 rounded-md;
 }
 
 .secondary-btn {
@@ -52,5 +52,5 @@ table.basic a {
 }
 
 .btn-default {
-    @apply bg-blue-900 text-white px-4 py-1 rounded-md;
+    @apply bg-gray-900 text-white px-4 py-1 rounded-md;
 }
