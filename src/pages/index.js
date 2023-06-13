@@ -8,7 +8,7 @@ export default function Home() {
     <div className="text-white flex justify-between">
       <h2>Hello, <b>{session?.user?.name}</b> </h2>
       
-      <div className="flex bg-gray-200 gap-1 text-black rounded-lg">
+      <div className="flex bg-highlight gap-1 text-white rounded-lg">
         <img src={session?.user?.image} alt="user image" className="w-6 h-6 rounded-md overflow-hidden"/>
         <span className="px-2">{session?.user?.name}</span>
       </div>

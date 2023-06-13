@@ -115,7 +115,7 @@ function Categories({swal}) {
             <form onSubmit={saveCategory}>
                 <div className="flex gap-1 mb-5">
                     <input 
-                        className="mb-0" 
+                        className="mb-0 md:w-auto" 
                         type="text" 
                         placeholder={'Category name'}
                         value={name}
@@ -123,7 +123,7 @@ function Categories({swal}) {
                     />
 
                     <select 
-                        className="mb-0"
+                        className="mb-0 md:w-auto"
                         onChange={e => setParentCategory(e.target.value)}
                         value={parentCategory}
                     >

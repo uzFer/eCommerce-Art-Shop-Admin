@@ -17,7 +17,7 @@ export default function Navbar( {show} ) {
     }
 
     return (
-        <aside className={(show?'left-0':'-left-full')+" top-0 text-gray-100 p-4 pr-0 fixed w-full bg-dark h-full -left-full md:static md:w-auto transition-all"}>
+        <aside className={(show?'left-0':'-left-full')+" top-0 text-gray-100 p-4 pr-0 fixed w-full bg-dark h-full md:static md:w-auto transition-all"}>
             <div className="mb-8 mr-8">
                 <Logo />
             </div>
