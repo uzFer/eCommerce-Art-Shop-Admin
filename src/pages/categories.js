@@ -139,7 +139,7 @@ function Categories({swal}) {
                     <label className="block mb-1">Properties</label>
                     <button 
                         type="button"
-                        className="secondary-btn text-sm mb-2"
+                        className="secondary-btn text-sm mb-2 hover:text-dark hover:bg-gray-500 transition-all"
                         onClick={addProperty}
                     >
                         Add new property
@@ -161,7 +161,7 @@ function Categories({swal}) {
                                 value={property.values}
                             />
                             <button 
-                                className="btn-default"
+                                className="btn-default hover:text-red hover:bg-pink transition-all"
                                 type="button"
                                 onClick={e => removeProperty(index)}
                             >
@@ -172,7 +172,11 @@ function Categories({swal}) {
                 </div>
 
                 <div className="flex gap-1">
-                    <button type="submit" className="primary-btn py-1">Save</button>
+                    <button 
+                        type="submit" 
+                        className="primary-btn py-1 hover:text-black hover:bg-primary transition-all">
+                        Save
+                    </button>
                     {editedCategory && (
                         <button 
                             type="button"
@@ -182,7 +186,7 @@ function Categories({swal}) {
                                 setParentCategory('');
                                 setProperties([]);
                             }}
-                            className="btn-default">
+                            className="btn-default hover:text-red hover:bg-pink transition-all">
                             Cancel
                         </button>
                     )}
@@ -190,7 +194,7 @@ function Categories({swal}) {
             </form>
 
             {!editedCategory && 
-                <table className="basic mt-4">
+                <table className="basic mt-10">
                     <thead>
                         <tr>
                             <td>Category Name</td>
@@ -206,12 +210,12 @@ function Categories({swal}) {
                                 <td className="flex flex-">
                                     <button 
                                         onClick={() => editCategory(category)} 
-                                        className="primary-btn mr-1">
+                                        className="secondary-btn mr-2 hover:text-dark hover:bg-gray-500 transition-all">
                                         Edit
                                     </button>
                                     <button 
                                         onClick={() => deleteCategory(category)} 
-                                        className="primary-btn">
+                                        className="btn-default hover:text-red hover:bg-pink transition-all">
                                         Delete
                                     </button>
                                 </td>

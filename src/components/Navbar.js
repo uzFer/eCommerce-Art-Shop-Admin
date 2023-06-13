@@ -1,10 +1,11 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Logo from "./Logo";
 
 export default function Navbar( {show} ) {
     const inactiveLink = 'flex gap-1 p-1';
-    const activeLink = inactiveLink + ' bg-gray-600 text-primary rounded-sm p-1';
+    const activeLink = inactiveLink + ' bg-highlight text-primary rounded-sm p-1';
     const inactiveIcon = 'w-6 h-6';
     const activeIcon = inactiveIcon + ' text-primary';
     const router = useRouter();
@@ -16,14 +17,10 @@ export default function Navbar( {show} ) {
     }
 
     return (
-        <aside className={(show?'left-0':'-left-full')+" text-gray-100 p-4 pr-0 fixed w-full bg-gray-900 h-full -left-full"}>
-            <Link href={'/'} className="flex gap-1 mb-8 mr-8">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
-                </svg>
-                <span className="font-bold pl-2">Art Admin</span>
-            </Link>
-
+        <aside className={(show?'left-0':'-left-full')+" top-0 text-gray-100 p-4 pr-0 fixed w-full bg-dark h-full -left-full md:static md:w-auto transition-all"}>
+            <div className="mb-8 mr-8">
+                <Logo />
+            </div>
             <nav className="flex flex-col gap-2">
                 <Link href={'/'} className={pathname === '/' ? activeLink : inactiveLink}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={pathname === '/' ? activeIcon : inactiveIcon}>

@@ -112,33 +112,35 @@ export default function ProductForm({
                 ))}
             </select>
             {propertiesToFill.length > 0 && propertiesToFill.map(p => (
-                <div className="flex gap-1" key={p.name}>
-                    <div key={p}>{p.name}</div>
-                    <select 
-                        value={productProperties[p.name]}
-                        onChange={e => setProductProperty(p.name, e.target.value)}>
-                        {p.values.map(v => (
-                            <option key={v} value={v}>{v}</option>
-                        ))}
-                    </select>
+                <div className="" key={p.name}>
+                    <label key={p} className="text-white">{p.name[0].toUpperCase() + p.name.substring(1)} </label>
+                    <div>
+                        <select 
+                            value={productProperties[p.name]}
+                            onChange={e => setProductProperty(p.name, e.target.value)}>
+                            {p.values.map(v => (
+                                <option key={v} value={v}>{v}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
             ))}
 
             <label>Photos</label>
             <div className="mb-2 flex flex-wrap gap-1">
-                <ReactSortable className="flex flex-wrap gap-1"list={images} setList={updateImagesOrder}>
+                <ReactSortable className="flex flex-wrap gap-1" list={images} setList={updateImagesOrder}>
                 {!!images?.length && images.map(link => (
-                    <div key={link} className="h-32">
-                        <img src={link} alt="" className="rounded-lg"></img>
+                    <div key={link} className="h-32 bg-dark p-2">
+                        <img src={link} alt="" className="rounded-md"></img>
                     </div>
                 ))}
                 </ReactSortable>
                 {isUploading && (
-                    <div className="h-32 flex items-center">
+                    <div className="h-32 flex items-center p-4">
                         <Spinner />
                     </div>
                 )}
-                <label className="w-32 h-32 bg-gray-300 cursor-pointer text-center flex flex-col items-center justify-center gap-1 text-sm text-gray-500 rounded-lg">
+                <label className="w-32 h-32 bg-gray-100 shadow-md cursor-pointer text-center flex flex-col items-center justify-center gap-1 text-sm text-gray-500 rounded-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                     </svg>
@@ -159,7 +161,7 @@ export default function ProductForm({
                 placeholder="Price"
                 value={price}
                 onChange={e => setPrice(e.target.value)} />
-            <button type="submit" className="primary-btn">Save</button>
+            <button type="submit" className="primary-btn hover:text-black hover:bg-primary transition-all">Save</button>
         </form>
     );
 }
