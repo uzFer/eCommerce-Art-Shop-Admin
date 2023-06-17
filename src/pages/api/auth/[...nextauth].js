@@ -22,8 +22,8 @@ export const authOptions = {
         return false;
       }
     },
-  } 
-}
+  },
+};
 
 export default NextAuth(authOptions);
 
