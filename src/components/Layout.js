@@ -12,7 +12,7 @@ export default function Layout({children}) {
       <div className="bg-dark w-full h-screen items-center text-center p-10">
           <h1 className="text-4xl mb-20 text-primary bg-highlight rounded-lg p-5">Welcome to Uzma&apos;s Art Shop!</h1>
           <div className="text-white text-xl">This admin management website is used to manage products and orders for Uzma&apos;s Art Shop</div>
-          <div className="text-white text-xl mb-20">To get started as an admin, please log in using the button on the right.</div>
+          <div className="text-white text-xl mb-20">To get started as an admin, please log in using the button below.</div>
           <button 
             onClick={() => signIn('google')} 
             className="bg-primary text-white p-2 px-4 rounded-lg hover:bg-button hover:text-bold transition-all">
